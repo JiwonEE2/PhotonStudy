@@ -10,13 +10,13 @@ public class PhotonTest : MonoBehaviour
 {
 	public ClientState state = 0;
 
-	private void Start()
-	{
-		// 유저 이름 세팅
-		PhotonNetwork.NickName = $"Test Player {Random.Range(100, 1000)}";
-		// Photon sever 접속 (PhotonServerSettings 파일의 설정 사용)
-		PhotonNetwork.ConnectUsingSettings();
-	}
+	// private void Start()
+	// {
+	// 	// 유저 이름 세팅
+	// 	PhotonNetwork.NickName = $"Test Player {Random.Range(100, 1000)}";
+	// 	// Photon sever 접속 (PhotonServerSettings 파일의 설정 사용)
+	// 	PhotonNetwork.ConnectUsingSettings();
+	// }
 
 	private void Update()
 	{
