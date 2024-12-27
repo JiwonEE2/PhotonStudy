@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,28 +13,35 @@ public class MenuPanel : MonoBehaviour
 	public Button nicknameUpdateButton;
 
 	[Header("Main Menu")]
+
 	#region Main Menu
+
 	public RectTransform mainMenuPanel;
+
 	public Button createRoomButton;
 	public Button findRoomButton;
 	public Button randomRoomButton;
 	public Button logoutButton;
+
 	#endregion
 
-	[Space(20)]
-	[Header("Create Room Menu")]
+	[Space(20)] [Header("Create Room Menu")]
+
 	#region Create Room Menu
+
 	public RectTransform createRoomMenuPanel;
+
 	public InputField roomNameInput;
 	public InputField playerNumInput;
 	public Button createButton;
 	public Button cancelButton;
+
 	#endregion
 
 	private void Awake()
 	{
 		createRoomButton.onClick.AddListener(CreateRoomButtonClick);
-		findRoomButton.onClick.AddListener (FindRoomButtonClick);
+		findRoomButton.onClick.AddListener(FindRoomButtonClick);
 		randomRoomButton.onClick.AddListener(RandomRoomButtonClick);
 		logoutButton.onClick.AddListener(LogoutButtonClick);
 		createButton.onClick.AddListener(CreateButtonClick);
@@ -42,7 +51,8 @@ public class MenuPanel : MonoBehaviour
 
 	private void OnEnable()
 	{
-		
+		playerName.text = $"안녕하세요, {PhotonNetwork.LocalPlayer.NickName}";
+		CancelButtonClick();
 	}
 
 	private void CreateRoomButtonClick()
@@ -53,20 +63,37 @@ public class MenuPanel : MonoBehaviour
 
 	private void FindRoomButtonClick()
 	{
-		
 	}
-	
-	private void RandomRoomButtonClick() {
-		
+
+	private void RandomRoomButtonClick()
+	{
 	}
-	
-	private void LogoutButtonClick() {
-		
+
+	private void LogoutButtonClick()
+	{
 	}
 
 	private void CreateButtonClick()
 	{
-		
+		string roomName = roomNameInput.text;
+		int maxPlayer = int.Parse(playerNumInput.text);
+
+		if (string.IsNullOrEmpty(roomName))
+		{
+			roomName = $"Room {Random.Range(0, 1000)}";
+		}
+
+		if (maxPlayer <= 0)
+		{
+			maxPlayer = 8;
+		}
+
+		RoomOptions option = new RoomOptions
+		{
+			MaxPlayers = 8
+		};
+
+		PhotonNetwork.CreateRoom(roomName, option);
 	}
 
 	private void CancelButtonClick()
@@ -77,8 +104,7 @@ public class MenuPanel : MonoBehaviour
 
 	public void NicknameUpdateButtonClick()
 	{
-		
+		PhotonNetwork.NickName = nicknameInput.text;
+		playerName.text = $"안녕하세요, {PhotonNetwork.NickName}";
 	}
-
 }
-
