@@ -65,6 +65,8 @@ public class RoomPanel : MonoBehaviour
 		// 방장인 지 여부를 확인하여 활성 비활성
 		difficultyDropdown.gameObject.SetActive(PhotonNetwork.IsMasterClient);
 		startButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
+		// host 와 guest 씬 동기화. 어디서 선언하든 상관 없음
+		PhotonNetwork.AutomaticallySyncScene = true;
 	}
 
 	private void OnDisable()
@@ -109,6 +111,7 @@ public class RoomPanel : MonoBehaviour
 
 	private void StartButtonClick()
 	{
+		PhotonNetwork.LoadLevel("GameScene");
 	}
 
 	private void DifficultyValueChange(int arg0)
