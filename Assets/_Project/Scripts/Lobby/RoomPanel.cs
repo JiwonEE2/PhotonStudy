@@ -65,11 +65,38 @@ public class RoomPanel : MonoBehaviour
 		foreach (Player player in PhotonNetwork.CurrentRoom.Players.Values)
 		{
 			// 플레이어 정보 객체 생성
+			JoinPlayer(player);
 		}
 
 		// 방장인 지 여부를 확인하여 활성 비활성
 		difficultyDropdown.gameObject.SetActive(PhotonNetwork.IsMasterClient);
 		startButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
+	}
+
+	public void JoinPlayer(Player newPlayer)
+	{
+		PlayerEntry playerEntry = Instantiate(playerTextPrefab, playerList, false).GetComponent<PlayerEntry>();
+		playerEntry.playerNameText.text = newPlayer.NickName;
+		playerEntry.player = newPlayer;
+		// LocalPlayer : 현재 플레이어
+		// 현재 클라이언트 플레이어와 새 플레이어가 다를 때. 새로운 플레이어가 입장했을 때
+		// 내 엔트리에만 레디토글 활성화. 다른사람거는 비활성화하겠다는 의미
+		if (PhotonNetwork.LocalPlayer.ActorNumber != newPlayer.ActorNumber)
+		{
+			playerEntry.readyToggle.gameObject.SetActive(false);
+		}
+	}
+
+	public void LeavePlayer(Player gonePlayer)
+	{
+		foreach (Transform child in playerList)
+		{
+			Player player = child.GetComponent<PlayerEntry>().player;
+			if (player.ActorNumber == gonePlayer.ActorNumber)
+			{
+				Destroy(child.gameObject);
+			}
+		}
 	}
 
 	private void CancelButtonClick()

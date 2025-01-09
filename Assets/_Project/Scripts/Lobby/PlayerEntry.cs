@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,8 @@ public class PlayerEntry : MonoBehaviour
 
 	private List<Toggle> selectToggles = new List<Toggle>();
 
+	public Player player;
+
 	private void Awake()
 	{
 		foreach (Transform toggleTransform in characterSelectToggleGroup.transform)
@@ -20,4 +23,3 @@ public class PlayerEntry : MonoBehaviour
 		}
 	}
 }
-
