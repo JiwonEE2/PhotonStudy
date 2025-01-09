@@ -69,6 +69,11 @@ public class MenuPanel : MonoBehaviour
 
 	private void RandomRoomButtonClick()
 	{
+		RoomOptions option = new RoomOptions
+		{
+			MaxPlayers = MAX_PLAYERS
+		};
+		PhotonNetwork.JoinRandomOrCreateRoom(roomOptions: option);
 	}
 
 	private void LogoutButtonClick()
