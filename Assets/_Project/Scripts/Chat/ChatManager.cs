@@ -1,12 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+// IChatClientListener
 using ExitGames.Client.Photon;
+// ChatClient
 using Photon.Chat;
+// AppSettings.GetChatSettings()
+using Photon.Chat.Demo;
+// PhotonNetwork
+using Photon.Pun;
+// AppSettings
+using Photon.Realtime;
 using UnityEngine;
+using ChatAuthValues = Photon.Chat.AuthenticationValues;
 
 // Photon Chat 사용
-// 1. IChatClientListner 인터페이스 구현
+// 1. IChatClientListener 인터페이스 구현
 public class ChatManager : MonoBehaviour, IChatClientListener
 {
 	public static ChatManager Instance { get; private set; }
@@ -31,6 +40,33 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 	private void Update()
 	{
 		client.Service();
+	}
+
+	public void SetNickname(string nickname)
+	{
+		// PhotonNetwork.NickName = nickname;
+		client.AuthValues = new ChatAuthValues(nickname);
+	}
+
+	// PhotonServerSettings를 사용하여 접속할 경우
+	public void ConnectUsingSettings()
+	{
+		AppSettings appSettings = PhotonNetwork.PhotonServerSettings.AppSettings;
+		// ChatAppSettings chatSettings = new ChatAppSettings
+		// {
+		// 	AppIdChat = AppSettings.AppIdChat
+		//	...
+		// };
+		// 위처럼 안해도 이렇게 할 수 있는 확장 메서드가 있다.
+		ChatAppSettings chatSettings = appSettings.GetChatSettings();
+		client.ConnectUsingSettings(chatSettings);
+	}
+
+	// 기본적으로 AppId를 통해 접속할 경우
+	public void ConnectUsingAppId()
+	{
+		string chatId = "e870cbcb-6bdb-456e-ae61-651e54dccfd2";
+		client.Connect(chatId, "1.0", client.AuthValues);
 	}
 
 	public void DebugReturn(DebugLevel level, string message)
