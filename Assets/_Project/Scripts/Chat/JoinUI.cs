@@ -38,5 +38,13 @@ public class JoinUI : MonoBehaviour
 
 	private void JoinRoomButtonClick()
 	{
+		ChatManager.Instance.ChatStart(roomnameInput.text);
+		roomnameInput.interactable = false;
+		joinRoomButton.interactable = false;
+	}
+
+	public void OnJoinedServer()
+	{
+		connectButton.GetComponentInChildren<Text>().text = "채팅 서버 접속됨";
 	}
 }

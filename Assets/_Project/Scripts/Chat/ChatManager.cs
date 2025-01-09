@@ -25,6 +25,9 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 
 	private ChatClient client;
 
+	public ChatState state = 0;
+	public string currentChannel;
+
 	private void Awake()
 	{
 		Instance = this;
@@ -69,6 +72,35 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 		client.Connect(chatId, "1.0", client.AuthValues);
 	}
 
+	// 특정 채팅방(채팅 채널)에서 채팅 시작
+	public void ChatStart(string roomName)
+	{
+		client.Subscribe(new string[] { roomName });
+	}
+
+	public void OnChatStateChange(ChatState state)
+	{
+		if (this.state != state)
+		{
+			print($"Chat state changed: {state}");
+			this.state = state;
+		}
+	}
+
+	public void OnSubscribed(string[] channels, bool[] results)
+	{
+		currentChannel = channels[0];
+		joinUI.gameObject.SetActive(false);
+		chatUI.gameObject.SetActive(true);
+		chatUI.roomNameLabel.text = channels[0];
+		print($"채팅방 접속; {channels[0]}");
+	}
+
+	public void OnConnected()
+	{
+		joinUI.OnJoinedServer();
+	}
+
 	public void DebugReturn(DebugLevel level, string message)
 	{
 	}
@@ -77,23 +109,11 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 	{
 	}
 
-	public void OnConnected()
-	{
-	}
-
-	public void OnChatStateChange(ChatState state)
-	{
-	}
-
 	public void OnGetMessages(string channelName, string[] senders, object[] messages)
 	{
 	}
 
 	public void OnPrivateMessage(string sender, object message, string channelName)
-	{
-	}
-
-	public void OnSubscribed(string[] channels, bool[] results)
 	{
 	}
 
