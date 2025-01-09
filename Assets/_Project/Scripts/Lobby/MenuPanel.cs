@@ -71,6 +71,8 @@ public class MenuPanel : MonoBehaviour
 
 	private void LogoutButtonClick()
 	{
+		// 연결 해제
+		PhotonNetwork.Disconnect();
 	}
 
 	private void CreateButtonClick()

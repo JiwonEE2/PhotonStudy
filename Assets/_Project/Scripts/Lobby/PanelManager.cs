@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 public class PanelManager : MonoBehaviourPunCallbacks
@@ -41,6 +42,12 @@ public class PanelManager : MonoBehaviourPunCallbacks
 	public override void OnConnected()
 	{
 		PanelOpen("Menu");
+	}
+
+	public override void OnDisconnected(DisconnectCause cause)
+	{
+		LogManager.Log($"로그아웃: {cause}");
+		PanelOpen("Login");
 	}
 
 	// 방을 생성하였을 때 호출
