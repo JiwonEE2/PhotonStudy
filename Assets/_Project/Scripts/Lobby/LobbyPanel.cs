@@ -18,6 +18,14 @@ public class LobbyPanel : MonoBehaviour
 		cancelButton.onClick.AddListener(CancelButtonClick);
 	}
 
+	private void OnEnable()
+	{
+		foreach (RoomInfo roomInfo in currentRoomList)
+		{
+			AddRoomButton(roomInfo);
+		}
+	}
+
 	private void OnDisable()
 	{
 		foreach (Transform child in roomListRect)

@@ -56,10 +56,25 @@ public class PanelManager : MonoBehaviourPunCallbacks
 		PanelOpen("Room");
 	}
 
+	public override void OnJoinedRoom()
+	{
+		PanelOpen("Room");
+	}
+
 	// 방에서 떠났을 때 호출
 	public override void OnLeftRoom()
 	{
 		PanelOpen("Menu");
+	}
+
+	public override void OnPlayerEnteredRoom(Player newPlayer)
+	{
+		room.JoinPlayer(newPlayer);
+	}
+
+	public override void OnPlayerLeftRoom(Player otherPlayer)
+	{
+		room.LeavePlayer(otherPlayer);
 	}
 
 	public override void OnJoinedLobby()
