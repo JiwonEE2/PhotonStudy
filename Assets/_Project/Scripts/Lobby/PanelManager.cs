@@ -71,4 +71,9 @@ public class PanelManager : MonoBehaviourPunCallbacks
 	{
 		PanelOpen("Menu");
 	}
+
+	public override void OnRoomListUpdate(List<RoomInfo> roomList)
+	{
+		lobby.UpdateRoomList(roomList);
+	}
 }
