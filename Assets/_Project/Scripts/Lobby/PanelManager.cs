@@ -42,4 +42,16 @@ public class PanelManager : MonoBehaviourPunCallbacks
 	{
 		PanelOpen("Menu");
 	}
+
+	// 방을 생성하였을 때 호출
+	public override void OnCreatedRoom()
+	{
+		PanelOpen("Room");
+	}
+
+	// 방에서 떠났을 때 호출
+	public override void OnLeftRoom()
+	{
+		PanelOpen("Menu");
+	}
 }

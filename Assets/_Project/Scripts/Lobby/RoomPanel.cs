@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,6 +35,28 @@ public class RoomPanel : MonoBehaviour
 
 	private void Awake()
 	{
+		startButton.onClick.AddListener(StartButtonClick);
+		cancelButton.onClick.AddListener(CancelButtonClick);
+		difficultyDropdown.ClearOptions();
+		foreach (object difficulty in Enum.GetValues(typeof(Difficulty)))
+		{
+			Dropdown.OptionData option = new Dropdown.OptionData(difficulty.ToString());
+			difficultyDropdown.options.Add(option);
+		}
+
+		difficultyDropdown.onValueChanged.AddListener(DifficultyValueChange);
+	}
+
+	private void CancelButtonClick()
+	{
+		PhotonNetwork.LeaveRoom();
+	}
+
+	private void StartButtonClick()
+	{
+	}
+
+	private void DifficultyValueChange(int arg0)
+	{
 	}
 }
-
