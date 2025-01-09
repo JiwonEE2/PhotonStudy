@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class MenuPanel : MonoBehaviour
 {
+	const int MAX_PLAYERS = 8;
 	public Text playerName;
 
 	public InputField nicknameInput;
@@ -79,7 +80,10 @@ public class MenuPanel : MonoBehaviour
 	private void CreateButtonClick()
 	{
 		string roomName = roomNameInput.text;
-		int maxPlayer = int.Parse(playerNumInput.text);
+		if (false == int.TryParse(playerNumInput.text, out int maxPlayer))
+		{
+			maxPlayer = MAX_PLAYERS;
+		}
 
 		if (string.IsNullOrEmpty(roomName))
 		{
@@ -88,12 +92,12 @@ public class MenuPanel : MonoBehaviour
 
 		if (maxPlayer <= 0)
 		{
-			maxPlayer = 8;
+			maxPlayer = MAX_PLAYERS;
 		}
 
 		RoomOptions option = new RoomOptions
 		{
-			MaxPlayers = 8
+			MaxPlayers = MAX_PLAYERS
 		};
 
 		PhotonNetwork.CreateRoom(roomName, option);
