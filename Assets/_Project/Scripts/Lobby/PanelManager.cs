@@ -61,4 +61,14 @@ public class PanelManager : MonoBehaviourPunCallbacks
 	{
 		PanelOpen("Menu");
 	}
+
+	public override void OnJoinedLobby()
+	{
+		PanelOpen("Lobby");
+	}
+
+	public override void OnLeftLobby()
+	{
+		PanelOpen("Menu");
+	}
 }

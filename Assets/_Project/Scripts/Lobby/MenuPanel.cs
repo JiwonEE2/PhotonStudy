@@ -63,6 +63,7 @@ public class MenuPanel : MonoBehaviour
 
 	private void FindRoomButtonClick()
 	{
+		PhotonNetwork.JoinLobby();
 	}
 
 	private void RandomRoomButtonClick()
