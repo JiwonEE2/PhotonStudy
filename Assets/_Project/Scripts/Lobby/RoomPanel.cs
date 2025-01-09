@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,6 +46,30 @@ public class RoomPanel : MonoBehaviour
 		}
 
 		difficultyDropdown.onValueChanged.AddListener(DifficultyValueChange);
+	}
+
+	private void OnEnable()
+	{
+		// 플레이어 리스트에 다른 객체가 있으면 일단 모두 삭제
+		foreach (Transform child in playerList)
+		{
+			Destroy(child.gameObject);
+		}
+
+		// 유효성 검사(방에 입장한 상태인가?==InRoom)
+		if (false == PhotonNetwork.InRoom) return;
+
+		roomTitleText.text = PhotonNetwork.CurrentRoom.Name;
+
+		// photon의 Player 클래스 가져오기
+		foreach (Player player in PhotonNetwork.CurrentRoom.Players.Values)
+		{
+			// 플레이어 정보 객체 생성
+		}
+
+		// 방장인 지 여부를 확인하여 활성 비활성
+		difficultyDropdown.gameObject.SetActive(PhotonNetwork.IsMasterClient);
+		startButton.gameObject.SetActive(PhotonNetwork.IsMasterClient);
 	}
 
 	private void CancelButtonClick()
