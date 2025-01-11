@@ -78,6 +78,12 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 		client.Subscribe(new string[] { roomName });
 	}
 
+	// 채팅 메시지 전송
+	public void SendChatMessage(string message)
+	{
+		client.PublishMessage(currentChannel, message);
+	}
+
 	public void OnChatStateChange(ChatState state)
 	{
 		if (this.state != state)
@@ -101,15 +107,26 @@ public class ChatManager : MonoBehaviour, IChatClientListener
 		joinUI.OnJoinedServer();
 	}
 
+	public void OnGetMessages(string channelName, string[] senders, object[] messages)
+	{
+		// 유효성 검사
+		if (channelName != currentChannel)
+		{
+			print($"다른 채널의 메시지 수신: {channelName}");
+			return;
+		}
+
+		for (int i = 0; i < senders.Length; i++)
+		{
+			chatUI.ReceiveChatMessage(senders[i], messages[i].ToString());
+		}
+	}
+
 	public void DebugReturn(DebugLevel level, string message)
 	{
 	}
 
 	public void OnDisconnected()
-	{
-	}
-
-	public void OnGetMessages(string channelName, string[] senders, object[] messages)
 	{
 	}
 

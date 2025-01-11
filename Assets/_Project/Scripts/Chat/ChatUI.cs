@@ -22,6 +22,12 @@ public class ChatUI : MonoBehaviour
 	//메시지를 보낼때 호출
 	public void SendChatMessage()
 	{
+		string message = messageInput.text;
+		if (string.IsNullOrEmpty(message)) return;
+
+		// ChatManager에게 메시지 보내기 호출
+		ChatManager.Instance.SendChatMessage(message);
+
 		messageInput.text = "";
 		// 엔터 누를 때마다 다시 활성화
 		messageInput.ActivateInputField();
