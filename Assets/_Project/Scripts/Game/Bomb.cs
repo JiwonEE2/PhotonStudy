@@ -10,5 +10,6 @@ public class Bomb : MonoBehaviour
 	private void Reset()
 	{
 		rb = GetComponent<Rigidbody>();
+		particlePrefab = Resources.Load<ParticleSystem>("BombParticle");
 	}
 }
