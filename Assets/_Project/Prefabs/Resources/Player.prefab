@@ -55,7 +55,7 @@ MonoBehaviour:
   shotPower: 0
   hpText: {fileID: 0}
   shotText: {fileID: 0}
-  bombPrefab: {fileID: 0}
+  bombPrefab: {fileID: 6977441004220149566, guid: d4b99395c263f894daaa9387180d8c84, type: 3}
 --- !u!136 &195955986716403911
 CapsuleCollider:
   m_ObjectHideFlags: 0
