@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviourPun
 				shotPoint.forward);
 			shotCount++;
 			shotText.text = shotCount.ToString();
+			anim.SetTrigger("Attack");
 		}
 	}
 
@@ -69,6 +70,9 @@ public class PlayerController : MonoBehaviourPun
 		float x = Input.GetAxis("Horizontal");
 		float z = Input.GetAxis("Vertical");
 		rb.velocity = new Vector3(x, 0, z) * moveSpeed;
+
+		// 움직이고 있을 때
+		anim.SetBool("IsMoving", rb.velocity.magnitude > 0.01f);
 	}
 
 	private void Rotate()
