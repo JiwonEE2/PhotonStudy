@@ -1935,7 +1935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec776180e60acbe4b849d27c4e0add9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPositions: {fileID: 0}
+  playerPositions: {fileID: 876235927}
 --- !u!4 &2029430222
 Transform:
   m_ObjectHideFlags: 0
