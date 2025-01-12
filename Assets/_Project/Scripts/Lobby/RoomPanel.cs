@@ -5,7 +5,8 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
-
+// System.Collections와 모호한 참조 발생 가능
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public enum Difficulty
 {
@@ -27,7 +28,8 @@ public class RoomPanel : MonoBehaviour
 	public RectTransform playerList;
 	public GameObject playerTextPrefab;
 
-	public Dictionary<int, PlayerEntry> playerListDic = new Dictionary<int, PlayerEntry>();
+	public Dictionary<int, PlayerEntry> playerListDic =
+		new Dictionary<int, PlayerEntry>();
 
 	public Button startButton;
 	public Button cancelButton;
@@ -41,7 +43,8 @@ public class RoomPanel : MonoBehaviour
 		difficultyDropdown.ClearOptions();
 		foreach (object difficulty in Enum.GetValues(typeof(Difficulty)))
 		{
-			Dropdown.OptionData option = new Dropdown.OptionData(difficulty.ToString());
+			Dropdown.OptionData option =
+				new Dropdown.OptionData(difficulty.ToString());
 			difficultyDropdown.options.Add(option);
 		}
 
@@ -80,7 +83,8 @@ public class RoomPanel : MonoBehaviour
 
 	public void JoinPlayer(Player newPlayer)
 	{
-		PlayerEntry playerEntry = Instantiate(playerTextPrefab, playerList, false).GetComponent<PlayerEntry>();
+		PlayerEntry playerEntry = Instantiate(playerTextPrefab, playerList, false)
+			.GetComponent<PlayerEntry>();
 		playerEntry.playerNameText.text = newPlayer.NickName;
 		playerEntry.player = newPlayer;
 		// LocalPlayer : 현재 플레이어
@@ -114,7 +118,16 @@ public class RoomPanel : MonoBehaviour
 		PhotonNetwork.LoadLevel("GameScene");
 	}
 
-	private void DifficultyValueChange(int arg0)
+	private void DifficultyValueChange(int value)
 	{
+		Hashtable customProperties = PhotonNetwork.CurrentRoom.CustomProperties;
+		customProperties["Difficulty"] = value;
+		PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
+	}
+
+	public void OnDifficultyChange(Difficulty value)
+	{
+		roomDifficulty = value;
+		difficultyText.text = value.ToString();
 	}
 }
