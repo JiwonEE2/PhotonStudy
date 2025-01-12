@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -26,9 +27,19 @@ public class GameManager : MonoBehaviour
 		yield return new WaitForSeconds(1f);
 
 		// 랜덤 위치에 플레이어 생성
-		Vector3 spawnPos = playerPositions.GetChild(Random.Range(0, playerPositions
-			.childCount)).position;
-		PhotonNetwork.Instantiate("Player", spawnPos, Quaternion.identity)
-			.name = PhotonNetwork.NickName;
+		// Vector3 spawnPos = playerPositions.GetChild(Random.Range(0, playerPositions
+		// 	.childCount)).position;
+		// PhotonNetwork.Instantiate("Player", spawnPos, Quaternion.identity)
+		// 	.name = PhotonNetwork.NickName;
+
+		// Player Numbering을 통해 특정 위치에 플레이어 생성
+		// GetPlayerNumber 확장메서드 : 포톤 네트워크에 연결된 다른 플레이어들 사이에서 동기화된 플레이어 번호.
+		// Actor Number와 다름. (Scene마다 선착순으로 0~플레이어 수만큼 부여됨)
+		// GetPlayerNumber 확장메서드가 동작하기 위해서는 Scene에 PlayerNumbering 컴포넌트 필요
+		int playerNumber = PhotonNetwork.LocalPlayer.GetPlayerNumber();
+		Vector3 playerPos = playerPositions.GetChild(playerNumber).position;
+		GameObject playerObj =
+			PhotonNetwork.Instantiate("Player", playerPos, Quaternion.identity);
+		playerObj.name = $"Player {playerNumber}";
 	}
 }
