@@ -94,6 +94,8 @@ public class RoomPanel : MonoBehaviour
 		{
 			playerEntry.readyToggle.gameObject.SetActive(false);
 		}
+
+		SortPlayer();
 	}
 
 	public void LeavePlayer(Player gonePlayer)
@@ -105,6 +107,18 @@ public class RoomPanel : MonoBehaviour
 			{
 				Destroy(child.gameObject);
 			}
+		}
+
+		SortPlayer();
+	}
+
+	// player가 들어오거나 나갈 때 방장이 제일 위에 오도록
+	private void SortPlayer()
+	{
+		foreach (Transform player in playerList)
+		{
+			Player playerInfo = player.GetComponent<PlayerEntry>().player;
+			player.SetSiblingIndex(playerInfo.ActorNumber);
 		}
 	}
 
