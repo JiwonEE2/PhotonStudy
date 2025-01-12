@@ -17,6 +17,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 		{
 			PhotonNetwork.ConnectUsingSettings();
 		}
+		else
+		{
+			GameManager.isGameReady = true;
+		}
 	}
 
 	public override void OnConnectedToMaster()
