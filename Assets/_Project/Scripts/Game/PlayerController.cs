@@ -44,6 +44,8 @@ public class PlayerController : MonoBehaviourPun
 
 	private void Update()
 	{
+		hpText.text = hp.ToString();
+		shotText.text = shotCount.ToString();
 		// 내 photon view만 움직이도록 예외처리
 		if (false == photonView.IsMine) return;
 		Move();
@@ -54,7 +56,6 @@ public class PlayerController : MonoBehaviourPun
 			photonView.RPC("Fire", RpcTarget.All, shotPoint.position,
 				shotPoint.forward);
 			shotCount++;
-			shotText.text = shotCount.ToString();
 			anim.SetTrigger("Attack");
 		}
 	}
@@ -87,13 +88,11 @@ public class PlayerController : MonoBehaviourPun
 	private void Hit(float damage)
 	{
 		hp -= damage;
-		hpText.text = hp.ToString();
 	}
 
 	private void Heal(float amount)
 	{
 		hp += amount;
-		hpText.text = hp.ToString();
 	}
 
 	// fire를 통해 생성하는 bomb 객체는 "데드레커닝" (추측항법 알고리즘)을 통해 각 클라이언트들이 직접 생성하고,
