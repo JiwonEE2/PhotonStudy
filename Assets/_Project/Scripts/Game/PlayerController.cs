@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviourPun
 {
 	private Animator anim;
 
@@ -42,11 +43,14 @@ public class PlayerController : MonoBehaviour
 
 	private void Update()
 	{
+		// 내 photon view만 움직이도록 예외처리
+		if (false == photonView.IsMine) return;
 		Move();
 	}
 
 	private void FixedUpdate()
 	{
+		if (false == photonView.IsMine) return;
 		Rotate();
 	}
 
