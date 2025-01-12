@@ -144,4 +144,17 @@ public class RoomPanel : MonoBehaviour
 		roomDifficulty = value;
 		difficultyText.text = value.ToString();
 	}
+
+	public void OnCharacterSelectChange(Player target, Hashtable changes)
+	{
+		foreach (Transform child in playerList)
+		{
+			PlayerEntry entry = child.GetComponent<PlayerEntry>();
+			if (entry.player == target)
+			{
+				int selection = (int)changes["CharacterSelect"];
+				entry.SetSelection(selection);
+			}
+		}
+	}
 }

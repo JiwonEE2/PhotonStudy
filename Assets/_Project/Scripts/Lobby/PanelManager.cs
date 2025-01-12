@@ -105,4 +105,13 @@ public class PanelManager : MonoBehaviourPunCallbacks
 			room.OnDifficultyChange((Difficulty)p["Difficulty"]);
 		}
 	}
+
+	public override void OnPlayerPropertiesUpdate(Player targetPlayer,
+		Hashtable changedProps)
+	{
+		if (changedProps.ContainsKey("CharacterSelect"))
+		{
+			room.OnCharacterSelectChange(targetPlayer, changedProps);
+		}
+	}
 }
