@@ -150,6 +150,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 195955986716403915}
   - {fileID: 1363222660392827161}
   - {fileID: -692748166891637980}
   - {fileID: 7391013886969793436}
@@ -204,13 +205,13 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: IsMoving
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Attack
   m_SynchronizeLayers:
-  - SynchronizeType: 0
+  - SynchronizeType: 2
     LayerIndex: 0
 --- !u!1 &195955986957145824
 GameObject:
